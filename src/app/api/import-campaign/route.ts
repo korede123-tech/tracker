@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { GoogleGenerativeAI, Schema, Type } from '@google/generative-ai';
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -16,40 +16,40 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "GEMINI_API_KEY is not configured" }, { status: 500 });
     }
 
-    const schema: Schema = {
-      type: Type.OBJECT,
+    const schema = {
+      type: SchemaType.OBJECT,
       properties: {
         artist: {
-          type: Type.STRING,
+          type: SchemaType.STRING,
           description: "The name of the artist for this campaign",
         },
         releaseName: {
-          type: Type.STRING,
+          type: SchemaType.STRING,
           description: "The name of the release or album for this campaign",
         },
         extractedActivities: {
-          type: Type.ARRAY,
+          type: SchemaType.ARRAY,
           items: {
-            type: Type.OBJECT,
+            type: SchemaType.OBJECT,
             properties: {
               title: {
-                type: Type.STRING,
+                type: SchemaType.STRING,
                 description: "The title or description of the activity (e.g., 'DSP Editorial Placements')",
               },
               type: {
-                type: Type.STRING,
+                type: SchemaType.STRING,
                 description: "The type of activity, e.g., 'Digital', 'PR', 'Radio', 'Event', 'Other'",
               },
               stage: {
-                type: Type.STRING,
+                type: SchemaType.STRING,
                 description: "The stage of the campaign, e.g., 'Pre-Release', 'Release Week', 'Post-Release'",
               },
               date: {
-                type: Type.STRING,
+                type: SchemaType.STRING,
                 description: "The date of the activity if mentioned (ISO format YYYY-MM-DD), otherwise provide a reasonable default like today's date.",
               },
               status: {
-                type: Type.STRING,
+                type: SchemaType.STRING,
                 description: "The status of the activity, e.g., 'Scheduled', 'In Progress', 'Completed', defaulting to 'Scheduled'.",
               }
             },
